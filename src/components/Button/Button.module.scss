@@ -22,6 +22,7 @@
   }
   &:not(.disabled):not(.loading):hover{
     background: var(--button-primary-bg-hover);
+    cursor: pointer;
     $c:var(--button-primary-text-hover);
     color: $c;
     &, & svg{

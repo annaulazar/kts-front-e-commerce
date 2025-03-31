@@ -1,0 +1,14 @@
+.arrow {
+  //transform: translate(100px);
+}
+
+.product {
+  display: flex;
+  gap: var(--space-xl);
+  width: 100%;
+  .block {
+    $size: calc((100% - 40px - var(--space-xl)) / 2);
+    width: $size;
+    height: $size;
+  }
+}
