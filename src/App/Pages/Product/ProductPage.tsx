@@ -6,17 +6,11 @@ import ProductInfo from "./components/ProductInfo";
 import ArrowDownIcon from "components/icons/ArrowDownIcon";
 import Text from "components/Text"
 import style from './Product.module.scss'
+import { Product } from './types.ts'
 
-export type Prod = {
-    title: string;
-    description: string;
-    price: string;
-    images: String[];
-}
-
-const Product = () => {
+const ProductPage = () => {
     const { id } = useParams();
-    const [product, setProduct] = useState<Prod | null>(null)
+    const [product, setProduct] = useState<Product | null>(null)
 
     useEffect(() => {
         const fetch = async () => {
@@ -48,11 +42,11 @@ const Product = () => {
                 <Text tag='span'>Назад</Text>
             </div>
             <div className={style.product}>
-                <Slider className={style.block} images={product.images} />
-                <ProductInfo className={style.block} product={product} />
+                <Slider className={style.product__block} images={product.images} />
+                <ProductInfo className={style.product__block} product={product} />
             </div>
         </div>
     )
 };
 
-export default Product;
+export default ProductPage;

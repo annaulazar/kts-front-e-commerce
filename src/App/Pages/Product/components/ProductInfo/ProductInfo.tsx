@@ -6,13 +6,13 @@ import Button from "components/Button";
 const ProductInfo = ({product, className}) => {
     return (
         <div className={`${className} ${style.info}`}>
-            <div className={style.info_description}>
+            <div className={style.info__description}>
                 <Text view='title'>{product.title}</Text>
                 <Text view='p-20' color='secondary'>{product.description}</Text>
             </div>
-            <div className={style.info_purchase}>
+            <div className={style.info__purchase}>
                 <Text view='title'>${product.price}</Text>
-                <div className={style.buttons}>
+                <div className={style.info__buttons}>
                     <Button>Buy Now</Button>
                     <Button>Add to Cart</Button>
                 </div>

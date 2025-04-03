@@ -7,26 +7,26 @@
   padding: var(--space-s) var(--space-l);
   border: 0;
   background: var(--button-primary-bg);
-  $c: var(--button-primary-text);
-  color: $c;
+  $button-color: var(--button-primary-text);
+  color: $button-color;
   & svg{
-      fill: $c !important;
+      fill: $button-color !important;
     }
   &.disabled{
     background: var(--button-primary-bg-disabled);
-    $c:var(--button-primary-text-disabled);
-    color: $c;
+    $disabled-color:var(--button-primary-text-disabled);
+    color: $disabled-color;
     &, & svg{
-      fill: $c!important;
+      fill: $disabled-color!important;
     }
   }
   &:not(.disabled):not(.loading):hover{
     background: var(--button-primary-bg-hover);
     cursor: pointer;
-    $c:var(--button-primary-text-hover);
-    color: $c;
+    $hover-color:var(--button-primary-text-hover);
+    color: $hover-color;
     &, & svg{
-      fill: $c!important;
+      fill: $hover-color!important;
     }
   }
 

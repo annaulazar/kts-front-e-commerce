@@ -1,2 +1,2 @@
-export { default } from './ProductItem';
-export * from './ProductItem';
+export { default } from './ProductCard.tsx';
+export * from './ProductCard.tsx';

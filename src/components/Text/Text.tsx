@@ -26,7 +26,7 @@ const Text: React.FC<TextProps> = (props) => {
         // height: `${1.25*props.maxLines}em`,
         WebkitLineClamp: props.maxLines
     }:{} as CSSProperties
-    attributes.className=classNames(styles.Text,props.className,`v${props.view}`,`w${props.weight}`,`c${props.color}`)
+    attributes.className=classNames(styles.text,props.className,`v${props.view}`,`w${props.weight}`,`c${props.color}`)
     attributes.style=style
     switch (props.tag){
         case "h1":

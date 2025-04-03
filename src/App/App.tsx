@@ -4,7 +4,7 @@ import style from './App.module.scss';
 
 function App(): React.ReactNode {
     return (
-        <div className="app">
+        <div className={style.app}>
             <Outlet />
         </div>
     );

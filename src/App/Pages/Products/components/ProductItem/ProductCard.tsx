@@ -6,9 +6,9 @@ import Button from "components/Button";
 import style from './ProductItem.module.scss';
 
 
-const ProductItem = ({product}) => {
+const ProductCard = ({product}) => {
     const navigate = useNavigate();
-    const cardHandler = (id): void => {
+    const cardHandler = (id: string) => {
         navigate(`/products/${id}`);
     };
 
@@ -26,4 +26,4 @@ const ProductItem = ({product}) => {
     )
 };
 
-export default ProductItem;
+export default ProductCard;

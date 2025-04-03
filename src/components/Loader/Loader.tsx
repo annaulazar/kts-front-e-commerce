@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from "classnames";
-import style from './Loader.module.scss';
+import styles from './Loader.module.scss';
 
 export type LoaderProps = {
     /** Размер */
@@ -36,7 +36,7 @@ const Loader: React.FC<LoaderProps> = ({size,className}) => {
             </svg>
             s=60
     }
-    return <div className={classNames(style.Loader,className)} style={
+    return <div className={classNames(styles.Loader,className)} style={
         {width:s,height:s}
     }>
         {inner}

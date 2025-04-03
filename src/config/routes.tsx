@@ -2,7 +2,7 @@ import { RouteObject,  Navigate } from "react-router";
 import App from "../App";
 import React from "react";
 import Products from "../App/Pages/Products";
-import Product from "../App/Pages/Product";
+import ProductPage from "../App/Pages/Product";
 
 const routesConfig: RouteObject[] = [
     {
@@ -10,12 +10,12 @@ const routesConfig: RouteObject[] = [
         element: <App />,
         children: [
             {
-                path: '/products',
+                path: '/',
                 element: <Products />
             },
             {
                 path: '/products/:id',
-                element: <Product />
+                element: <ProductPage />
             }
         ]
     },

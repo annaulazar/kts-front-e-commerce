@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import ProductItem from "./components/ProductItem";
+import ProductCard from "./components/ProductItem";
 import Text from 'components/Text'
 import style from './Products.module.scss'
 
@@ -36,7 +36,7 @@ const Products = () => {
                 </div>
                 <div className={style.items}>
                     {products.map(product =>
-                        <ProductItem key={product.id} product={product}/>
+                        <ProductCard key={product.id} product={product}/>
                     )}
                 </div>
             </div>

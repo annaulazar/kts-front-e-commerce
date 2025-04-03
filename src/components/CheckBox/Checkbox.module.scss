@@ -16,7 +16,7 @@
 
   }
 
-  &.disabled{
+  &_disabled{
     background-color: var(--checkbox-bg-disabled);
       box-shadow: inset 0 0 0 1px var(--checkbox-border-disabled);
 
