@@ -1,0 +1,10 @@
+.product {
+  display: flex;
+  gap: var(--space-xl);
+  width: 100%;
+  &__block {
+    $size: calc((100% - 40px - var(--space-xl)) / 2);
+    width: $size;
+    height: $size;
+  }
+}

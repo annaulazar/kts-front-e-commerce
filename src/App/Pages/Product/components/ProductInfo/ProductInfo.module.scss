@@ -1,0 +1,21 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 48px;
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+  &__purchase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+  &__buttons {
+    display: flex;
+    gap: var(--space-xl);
+  }
+}
