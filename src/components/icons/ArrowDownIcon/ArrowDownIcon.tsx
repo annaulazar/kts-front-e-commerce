@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Icon, { IconProps } from '../Icon';
 import classNames from "classnames";
+import Icon, { IconProps } from 'components/icons/Icon';
 
 const ArrowDownIcon: React.FC<IconProps> = ({color='primary',...props}) => <Icon {...props} >
         <path fillRule="evenodd" clipRule="evenodd"

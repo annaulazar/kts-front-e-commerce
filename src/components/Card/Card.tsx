@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Card.module.scss';
-import Text from "../Text";
 import classNames from "classnames";
+import Text from "components/Text";
+import styles from './Card.module.scss';
 
 export type CardProps = {
     /** Дополнительный classname */

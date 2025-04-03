@@ -1,8 +1,8 @@
 import React, {RefObject, useEffect, useRef, useState} from 'react'
 import classNames from 'classnames'
+import Input from "components/Input";
+import ArrowDownIcon from "components/icons/ArrowDownIcon";
 import styles from './MultiDropdown.module.scss'
-import Input from "../Input";
-import ArrowDownIcon from "../icons/ArrowDownIcon";
 
 const useClickOutside = <T extends HTMLElement>(ref: RefObject<T>, fn: () => void) => {
   useEffect(() => {

@@ -1,8 +1,6 @@
-import { Outlet } from 'react-router';
 import React from "react";
-
-import './App.scss';
-import Button from "../components/Button";
+import { Outlet } from 'react-router';
+import style from './App.module.scss';
 
 function App(): React.ReactNode {
     return (

@@ -1,9 +1,9 @@
-import './ProductItem.scss';
+import React from "react";
+import {useNavigate} from "react-router";
 import Card from "components/Card";
 import Text from "components/Text";
 import Button from "components/Button";
-import React from "react";
-import {useNavigate} from "react-router";
+import style from './ProductItem.module.scss';
 
 
 const ProductItem = ({product}) => {

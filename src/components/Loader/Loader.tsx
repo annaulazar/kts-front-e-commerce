@@ -1,6 +1,6 @@
 import React from 'react';
-import style from './Loader.module.scss';
 import classNames from "classnames";
+import style from './Loader.module.scss';
 
 export type LoaderProps = {
     /** Размер */
