@@ -59,3 +59,5 @@ export interface IApiStore {
         params: RequestParams<ReqT>
     ): Promise<ApiResponse<SuccessT, ErrorT>>;
 }
+
+

@@ -1,1 +1,2 @@
-export { default } from './ApiStore'
+export { default } from './ApiStore';
+export * from './types.ts';

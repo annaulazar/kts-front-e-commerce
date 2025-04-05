@@ -21,9 +21,8 @@ export default class ApiStore implements IApiStore {
             method: params.method,
             headers: { ...params.headers },
         };
-
         if (params.method === HTTPMethod.GET) {
-            endpoint = `${endpoint}?${stringify(params.data)}`;
+            endpoint = `${endpoint}?${stringify(params.data, {encodeValuesOnly: true})}`;
         }
 
         if (params.method === HTTPMethod.POST) {

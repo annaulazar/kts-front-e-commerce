@@ -1,7 +1,7 @@
 import { RouteObject,  Navigate } from "react-router";
 import App from "../App";
 import React from "react";
-import Products from "../App/Pages/Products";
+import ProductsPage from "../App/Pages/Products";
 import ProductPage from "../App/Pages/Product";
 
 const routesConfig: RouteObject[] = [
@@ -11,7 +11,7 @@ const routesConfig: RouteObject[] = [
         children: [
             {
                 path: '/',
-                element: <Products />
+                element: <ProductsPage />
             },
             {
                 path: '/products/:id',
