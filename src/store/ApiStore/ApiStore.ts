@@ -37,7 +37,7 @@ export default class ApiStore implements IApiStore {
         return [endpoint, options];
     }
 
-    async request<SuccessT, ErrorT = any, ReqT = {}>(
+    async request<SuccessT, ErrorT = unknown, ReqT = Record<string, unknown>>(
         params: RequestParams<ReqT>
     ): Promise<ApiResponse<SuccessT, ErrorT>> {
         try {
