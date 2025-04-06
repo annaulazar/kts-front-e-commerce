@@ -4,10 +4,11 @@ import Card from "components/Card";
 import Text from "components/Text";
 import Button from "components/Button";
 import style from './ProductICard.module.scss';
-import {ProductItemModel} from "../../../../../store/models/products";
+import {ProductItemModel} from "store/models/products";
 
 type ProductProps = {
-    product: ProductItemModel
+    product: ProductItemModel,
+    className?: string
 };
 
 const ProductCard: React.FC<ProductProps> = ({product}) => {

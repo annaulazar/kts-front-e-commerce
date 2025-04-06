@@ -7,7 +7,15 @@ import {
     GetProductsListParams,
 } from './types';
 import { Meta } from "utils/meta.ts";
-import {makeObservable, observable, computed, action, runInAction} from "mobx";
+import {
+    makeObservable,
+    observable,
+    computed,
+    action,
+    runInAction,
+    IReactionDisposer,
+    reaction
+} from "mobx";
 import {normalizeProductItem, ProductItemModel} from "store/models/products";
 import {
     CollectionModel,
@@ -15,6 +23,7 @@ import {
     linearizeCollection,
     normalizeCollection
 } from "store/models/shared/collection.ts";
+import rootStore from "store/RootStore";
 
 
 type PrivateFields = '_list' | '_meta';
@@ -28,6 +37,12 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     private _meta: Meta = Meta.initial;
 
     constructor() {
+        this._qpReaction = reaction(
+            () => rootStore.query.getParam('search'),
+            (...args) => {
+                console.log("search value change", args);
+            }
+        );
         makeObservable<ProductsStore, PrivateFields>(this, {
             _list: observable.ref,
             _meta: observable,
@@ -65,13 +80,21 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
         runInAction(() => {
             if (!response.success) {
                 this._meta = Meta.error;
+                console.log('response not success');
             }
             try {
                 this._meta = Meta.success;
-                const elements = response.data.data.map(normalizeProductItem);
+                const response_data = response.data.data;
+                let elements;
+                if (response_data.length) {
+                    elements = response_data.map(normalizeProductItem);
+                } else {
+                    elements = [response_data].map(normalizeProductItem);
+                }
                 this._list = normalizeCollection(elements, (el) => el.id);
                 return;
             } catch (e) {
+                console.log('error', e);
                 this._meta = Meta.error;
                 this._list = getInitialCollectionModel();
             }
@@ -84,6 +107,10 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     }
 
     destroy(): void {
+        console.log('destroyed')
         this.reset();
+        this._qpReaction();
     }
+
+
 }
