@@ -39,7 +39,6 @@ const ProductPage = () => {
     }
 
 
-
     return (
         <div className='container'>
             <div className={styles.product__nav} onClick={() => returnHandler()}>

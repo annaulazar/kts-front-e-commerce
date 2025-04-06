@@ -1,10 +1,10 @@
 import React from "react";
 import {useNavigate} from "react-router";
-import Card, {CardProps} from "components/Card";
+import Card from "components/Card";
 import Text from "components/Text";
 import Button from "components/Button";
 import style from './ProductICard.module.scss';
-import {ProductItemModel} from "store/models";
+import {ProductItemModel} from "../../../../../store/models/products";
 
 type ProductProps = {
     product: ProductItemModel

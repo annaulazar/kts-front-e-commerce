@@ -10,7 +10,8 @@ const ProductsPage = () => {
     const productsStore = useLocalStore(() => new ProductsStore());
 
     useEffect(() => {
-        productsStore.getProductsList();
+        productsStore.getProductsList({},
+            '/products');
     }, [productsStore]);
 
     return (

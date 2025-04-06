@@ -8,16 +8,22 @@ import {
 } from './types';
 import { Meta } from "utils/meta.ts";
 import {makeObservable, observable, computed, action, runInAction} from "mobx";
-import {normalizeProductItem, ProductItemModel} from "store/models/productitem.ts";
+import {normalizeProductItem, ProductItemModel} from "store/models/products";
+import {
+    CollectionModel,
+    getInitialCollectionModel,
+    linearizeCollection,
+    normalizeCollection
+} from "store/models/shared/collection.ts";
+
 
 type PrivateFields = '_list' | '_meta';
 
 const BASE_URL = 'https://front-school-strapi.ktsdev.ru/api';
 
 export default class ProductsStore implements IProductsStore, ILocalStore {
-    // стор, который делает запросы в сеть. Реализация стора в данной лекции не рассматривается
     private readonly _apiStore = new ApiStore(BASE_URL);
-    private _list: ProductItemModel[] = [];
+    private _list: CollectionModel<string, ProductItemModel[]> = getInitialCollectionModel();
     // состояние загрузки
     private _meta: Meta = Meta.initial;
 
@@ -33,7 +39,7 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     }
 
     get list(): ProductItemModel[] {
-        return this._list;
+        return linearizeCollection(this._list);
     }
 
     get meta(): Meta {
@@ -41,40 +47,39 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     }
 
     async getProductsList(
-        params: GetProductsListParams
+        params: GetProductsListParams,
+        endpoint: string
     ): Promise<void> {
+        params.populate = ['images', 'productCategory']
         this._meta = Meta.loading;
-        this._list = [];
+        this._list = getInitialCollectionModel();
 
         // запрос за списком репозиториев
         const response = await this._apiStore.request({
             method: HTTPMethod.GET,
-            data: {
-                populate: ['images', 'productCategory']
-            },
+            data: params,
             headers: {},
-            endpoint: `/products`
+            endpoint: endpoint
         });
 
         runInAction(() => {
-            if (response.success) {
-                try {
-                    this._meta = Meta.success;
-                    this._list = response.data.data.map(normalizeProductItem);
-                    return;
-                } catch (e) {
-                    this._meta = Meta.error;
-                    this._list = [];
-                }
-
+            if (!response.success) {
+                this._meta = Meta.error;
             }
-
-            this._meta = Meta.error;
+            try {
+                this._meta = Meta.success;
+                const elements = response.data.data.map(normalizeProductItem);
+                this._list = normalizeCollection(elements, (el) => el.id);
+                return;
+            } catch (e) {
+                this._meta = Meta.error;
+                this._list = getInitialCollectionModel();
+            }
         })
     }
 
     reset(): void {
-        this._list = [];
+        this._list = getInitialCollectionModel();
         this._meta = Meta.initial;
     }
 
