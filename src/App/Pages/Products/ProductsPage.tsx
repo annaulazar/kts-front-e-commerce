@@ -5,24 +5,27 @@ import style from './Products.module.scss'
 import { useLocalStore } from "utils/useLocalStore.ts";
 import ProductsStore from 'store/ProductsStore'
 import {observer} from "mobx-react-lite";
-import rootStore from "store/RootStore";
 import {Search} from "./components/Search";
+import {useSearchParams} from "react-router";
 
 const ProductsPage = () => {
     const productsStore = useLocalStore(() => new ProductsStore());
-    let value= rootStore.query.getParam('search');
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         productsStore.getProductsList({},
             '/products');
     }, [productsStore]);
 
-    const handleChangeValue = useCallback(
-        (e) => {
-            rootStore.query.setSearch(e.target.value);
-            value = rootStore.query.getParam('search');
-        }
-    );
+    const handleClick = () => {
+        productsStore.getProductsList({},
+            '/products');
+    }
+
+    const handleSearch = (value) => {
+        setSearchParams({'search' : value});
+        productsStore.setSearch(value);
+    }
 
     return (
         <div className='container'>
@@ -33,7 +36,7 @@ const ProductsPage = () => {
                         to see our old products please enter the name of the item</Text>
                 </div>
 
-                <Search value={productsStore.search} onSearch={productsStore.setSearch} />
+                <Search onSearch={handleSearch} onClick={handleClick}/>
 
                 <div className={style.items}>
                     {productsStore.list.map(product =>

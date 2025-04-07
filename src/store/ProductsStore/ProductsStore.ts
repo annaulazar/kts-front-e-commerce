@@ -13,7 +13,6 @@ import {
     computed,
     action,
     runInAction,
-    IReactionDisposer,
     reaction
 } from "mobx";
 import {normalizeProductItem, ProductItemModel} from "store/models/products";
@@ -44,7 +43,7 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
             () => rootStore.query.getParam('search'),
             (search) => {
                 console.log("search value change", search);
-                this._reset();
+                this.reset();
                 this._search = search;
                 this.getProductsList({}, '/products');
             }
@@ -52,10 +51,13 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
         makeObservable<ProductsStore, PrivateFields>(this, {
             _list: observable.ref,
             _meta: observable,
+            _search: observable,
             list: computed,
             meta: computed,
+            search: computed,
             reset: action,
-            getProductsList: action
+            getProductsList: action,
+            setSearch: action
         });
     }
 
@@ -69,6 +71,7 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
 
     setSearch = (value: string) => {
         this._search = value;
+        console.log('changed search', this._search)
     };
 
     get list(): ProductItemModel[] {

@@ -1,16 +1,13 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import Slider from "./components/Slider";
 import ProductInfo from "./components/ProductInfo";
 import ArrowDownIcon from "components/icons/ArrowDownIcon";
 import Text from "components/Text"
 import styles from './Product.module.scss'
-import { Product } from './types.ts'
 import { observer } from "mobx-react-lite";
 import { useLocalStore } from "utils/useLocalStore.ts";
 import ProductsStore from "store/ProductsStore";
-import { Meta } from "utils/meta.ts";
 
 const ProductPage = () => {
     const { id } = useParams();
