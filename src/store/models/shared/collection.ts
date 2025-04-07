@@ -25,3 +25,14 @@ export const normalizeCollection = <K extends string | number, T>(
 export const linearizeCollection = <K extends string | number, T>
 (elements: CollectionModel<K, T>): T[] =>
     elements.order.map((el) => elements.entities[el]);
+
+export const unionCollection = <K extends string | number, T>(
+    firstCollection: CollectionModel<K, T>,
+    secondCollection: CollectionModel<K, T>
+): CollectionModel<K, T> => {
+    const collection: CollectionModel<K, T> = getInitialCollectionModel();
+    collection.order = [...firstCollection.order, ...secondCollection.order];
+    collection.entities = {...firstCollection.entities, ...secondCollection.entities};
+
+    return collection;
+}

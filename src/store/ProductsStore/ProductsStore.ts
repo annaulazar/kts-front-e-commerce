@@ -20,7 +20,8 @@ import {
     CollectionModel,
     getInitialCollectionModel,
     linearizeCollection,
-    normalizeCollection
+    normalizeCollection,
+    unionCollection
 } from "store/models/shared/collection.ts";
 import rootStore from "store/RootStore";
 
@@ -36,7 +37,7 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     private _meta: Meta = Meta.initial;
     private _page: number = 0;
     private _hasMore = true;
-    private _search = '';
+    private _search = rootStore.query.getParam('search');
 
     constructor() {
         this._qpReaction = reaction(
@@ -71,11 +72,12 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
 
     setSearch = (value: string) => {
         this._search = value;
-        console.log('changed search', this._search)
     };
 
     get list(): ProductItemModel[] {
-        return linearizeCollection(this._list);
+        const gettedList = linearizeCollection(this._list);
+        console.log('gettedList', gettedList)
+        return gettedList;
     }
 
     get meta(): Meta {
@@ -85,10 +87,10 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     async getProductsList(
         params: GetProductsListParams,
         endpoint: string,
-        additionalParams: boolean = true
+        useParams: boolean = true
     ): Promise<void> {
         params.populate = ['images', 'productCategory']
-        if (additionalParams) {
+        if (useParams) {
             if (this._search) {
                 params.filters = {
                     title: {
@@ -97,12 +99,11 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
                 }
             }
             params.pagination = {
-                start: this._page * 25,
-                limit: 25
+                start: this._page * 12,
+                limit: 12
             }
         }
         this._meta = Meta.loading;
-        this._list = getInitialCollectionModel();
 
         // запрос за списком репозиториев
         const response = await this._apiStore.request({
@@ -111,13 +112,18 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
             headers: {},
             endpoint: endpoint
         });
-
+        if (response.data.data.length === 0) {
+            this._hasMore = false;
+            return;
+        }
         runInAction(() => {
             if (!response.success) {
                 this._meta = Meta.error;
                 console.log('response not success');
+                return;
             }
             try {
+                this._page += 1;
                 this._meta = Meta.success;
                 const response_data = response.data.data;
                 let elements;
@@ -126,8 +132,9 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
                 } else {
                     elements = [response_data].map(normalizeProductItem);
                 }
-                this._list = normalizeCollection(elements, (el) => el.id);
-                return;
+                this._list = unionCollection(this._list,
+                    normalizeCollection(elements, (el) => el.id));
+                // this._list = normalizeCollection(elements, (el) => el.id);
             } catch (e) {
                 console.log('error', e);
                 this._meta = Meta.error;

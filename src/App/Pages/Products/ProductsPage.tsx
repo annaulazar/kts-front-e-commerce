@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import {useEffect, useCallback, useRef} from "react";
 import ProductCard from "./components/ProductCard";
 import Text from 'components/Text'
 import style from './Products.module.scss'
@@ -7,6 +7,8 @@ import ProductsStore from 'store/ProductsStore'
 import {observer} from "mobx-react-lite";
 import {Search} from "./components/Search";
 import {useSearchParams} from "react-router";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "components/Loader";
 
 const ProductsPage = () => {
     const productsStore = useLocalStore(() => new ProductsStore());
@@ -27,6 +29,14 @@ const ProductsPage = () => {
         productsStore.setSearch(value);
     }
 
+    const nextScroll = () => {
+        if (!productsStore.hasMore) {
+            return;
+        }
+        productsStore.getProductsList({},
+            '/products');
+    }
+
     return (
         <div className='container'>
             <div className={style.layout}>
@@ -38,11 +48,23 @@ const ProductsPage = () => {
 
                 <Search onSearch={handleSearch} onClick={handleClick}/>
 
-                <div className={style.items}>
-                    {productsStore.list.map(product =>
-                        <ProductCard key={product.id} product={product}/>
-                    )}
-                </div>
+                <InfiniteScroll
+                    hasChildren={true}
+                    next={nextScroll}
+                    hasMore={productsStore.hasMore}
+                    loader={
+                        <div className={style.loader}>
+                            <Loader />
+                        </div>
+                    }
+                    dataLength={productsStore.list.length}
+                >
+                    <div className={style.items}>
+                        {productsStore.list.map(product =>
+                            <ProductCard key={product.id} product={product}/>
+                        )}
+                    </div>
+                </InfiniteScroll>
             </div>
         </div>
     )
