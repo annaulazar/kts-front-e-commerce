@@ -1,7 +1,7 @@
 import Button from "components/Button";
 
 import styles from "./Search.module.scss";
-import { Input } from "../Input";
+import Input from "components/Input";
 import MultiDropdown from "components/MultiDropdown";
 
 type SearchProps = {
@@ -30,6 +30,7 @@ export const Search = ({ value, onSearch }: SearchProps) => {
           </Button>
         </div>
         <MultiDropdown
+          className={styles.search__dropdown}
           options={[]}
           value={[]}
           onChange={() => {}}

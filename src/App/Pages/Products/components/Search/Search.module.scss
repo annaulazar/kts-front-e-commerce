@@ -11,18 +11,13 @@
     align-items: center;
     gap: 20px;
     width: 100%;
-
-    &:focus-within {
-      outline: var(--checkbox-check) solid 2px;
-    }
   }
 
-  input.search__input {
+  .search__input {
     width: 100%;
 
-
     &:focus {
-      outline: none;
+      outline: var(--checkbox-check) solid 2px;
     }
   }
 
