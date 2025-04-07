@@ -1,0 +1,44 @@
+.search {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+
+  &__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+
+    &:focus-within {
+      outline: var(--checkbox-check) solid 2px;
+    }
+  }
+
+  input.search__input {
+    width: 100%;
+
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__button {
+    min-width: max-content;
+  }
+
+  &__filter {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  &__dropdown {
+    max-width: 100%;
+  }
+}

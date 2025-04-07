@@ -11,14 +11,12 @@ export default class QueryParamsStore {
         makeObservable<QueryParamsStore, PrivateFields>(this, {
             _params: observable.ref,
             setSearch: action,
-            // params: computed
         });
     }
 
     getParam(
         key: string
     ): undefined | string | string[] | qs.ParsedQs | qs.ParsedQs[] {
-        console.log('param getted', this._params[key])
         return this._params[key];
     }
 
@@ -28,8 +26,6 @@ export default class QueryParamsStore {
         if (this._search !== search) {
             console.log('search global store', search)
             this._search = search;
-            const parsed_params = qs.parse(search)
-            console.log('parsed_params', parsed_params)
             this._params = qs.parse(search);
         }
     }

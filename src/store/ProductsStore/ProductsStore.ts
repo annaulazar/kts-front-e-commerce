@@ -35,12 +35,18 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     private _list: CollectionModel<string, ProductItemModel[]> = getInitialCollectionModel();
     // состояние загрузки
     private _meta: Meta = Meta.initial;
+    private _page: number = 0;
+    private _hasMore = true;
+    private _search = '';
 
     constructor() {
         this._qpReaction = reaction(
             () => rootStore.query.getParam('search'),
-            (...args) => {
-                console.log("search value change", args);
+            (search) => {
+                console.log("search value change", search);
+                this._reset();
+                this._search = search;
+                this.getProductsList({}, '/products');
             }
         );
         makeObservable<ProductsStore, PrivateFields>(this, {
@@ -53,6 +59,18 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
         });
     }
 
+    get hasMore() {
+        return this._hasMore;
+    }
+
+    get search() {
+        return this._search;
+    }
+
+    setSearch = (value: string) => {
+        this._search = value;
+    };
+
     get list(): ProductItemModel[] {
         return linearizeCollection(this._list);
     }
@@ -63,9 +81,23 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
 
     async getProductsList(
         params: GetProductsListParams,
-        endpoint: string
+        endpoint: string,
+        additionalParams: boolean = true
     ): Promise<void> {
         params.populate = ['images', 'productCategory']
+        if (additionalParams) {
+            if (this._search) {
+                params.filters = {
+                    title: {
+                        $containsi: this._search,
+                    }
+                }
+            }
+            params.pagination = {
+                start: this._page * 25,
+                limit: 25
+            }
+        }
         this._meta = Meta.loading;
         this._list = getInitialCollectionModel();
 
@@ -104,13 +136,14 @@ export default class ProductsStore implements IProductsStore, ILocalStore {
     reset(): void {
         this._list = getInitialCollectionModel();
         this._meta = Meta.initial;
+        this._page = 0;
+        this._hasMore = true;
     }
 
     destroy(): void {
         console.log('destroyed')
         this.reset();
         this._qpReaction();
+        this._search = "";
     }
-
-
 }

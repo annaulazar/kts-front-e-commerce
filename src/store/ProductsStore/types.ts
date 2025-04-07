@@ -1,6 +1,5 @@
 export type GetProductsListParams = {
-    perPage?: number;
-    page?: number;
+    pagination?: Record<string, number>;
     populate?: string[];
     filters?: Record<string, Record<string, string | Record<string, string>>>
 };

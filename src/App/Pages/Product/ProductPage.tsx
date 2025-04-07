@@ -18,7 +18,8 @@ const ProductPage = () => {
 
     useEffect(() => {
         productStore.getProductsList({},
-            `/products/${id}`);
+            `/products/${id}`,
+            false);
     }, [productStore]);
 
 
