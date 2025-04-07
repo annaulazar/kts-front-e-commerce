@@ -1,4 +1,4 @@
-.Icon{
+.icon{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,4 +20,10 @@
   & :global(.stroke):global(.accent){
     stroke: var(--text-accent);
   }
+
+}
+
+:global(.icon_left) {
+  transform: rotate(45deg);
+  transform-origin: 50% 50%;
 }

@@ -10,7 +10,9 @@
       "components": ["components/*"],
       "config": ["config/*"],
       "styles": ["styles/*"],
-      "utils": ["utils/*"]
+      "utils": ["utils/*"],
+      "store": ["store/*"],
+      "models": ["store/models/*"]
     }
   }
 }

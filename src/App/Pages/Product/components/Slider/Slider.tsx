@@ -1,9 +1,15 @@
 import style from './Slider.module.scss';
+import React from "react";
+import {ProductItemModel} from "store/models/products";
 
-const Slider = ({images, className}) => {
+type ProductProps = {
+    product: ProductItemModel,
+    className?: string
+};
+const Slider: React.FC<ProductProps> = ({product, className}) => {
     return (
         <div className={`${className} ${style.slider}`}>
-            <img src={images[0]} />
+            <img src={product.images[0]} />
         </div>
     )
 };
